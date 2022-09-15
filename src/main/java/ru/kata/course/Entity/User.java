@@ -1,29 +1,32 @@
 package ru.kata.course.Entity;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.processing.Generated;
+import javax.persistence.*;
 
-
-@Component
+@Entity
+@Table(name = "user")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    @Generated("id")
-    private Long id;
     private String name;
-    private int age;
-    private int weight;
     private String lastname;
 
-    @Autowired
     public User() {}
 
-    public  User(String name, int age, int weight, String lastname) {
-        this.age = age;
+    public  User(int id, String name, String lastname) {
         this.name = name;
-        this.weight = weight;
         this.lastname = lastname;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -34,21 +37,6 @@ public class User {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
 
     public String getLastname() {
         return lastname;

@@ -1,50 +1,72 @@
 package ru.kata.course.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import ru.kata.course.Entity.User;
+import ru.kata.course.dao.UserDAO;
+
+import javax.validation.Valid;
 
 
 @Controller
-@RequestMapping("/first")
+@RequestMapping("/user")
 public class FirstController {
 
-    @GetMapping("/hello")
-    public String sayHello(@RequestParam(value = "name", required = false) String name,
-                           @RequestParam(value = "surname", required = false) String surname,
-                           Model model) {
-           //System.out.println("hello, " + name + " " + surname);
-        model.addAttribute("message", "Hello, " + name + "" + surname + "news");
-        return "first/hello";
+    private final UserDAO userDAO;
+
+    @Autowired
+    public FirstController(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
-    @GetMapping("/goodbye")
-    public String goodByePage() {
-        return "first/goodbye";
+    @GetMapping()
+    public String index(Model model) {
+        model.addAttribute("user", userDAO.index());
+        return "user/index";
     }
 
-    @GetMapping("/calculator")
-    public String calculatorWeb(@RequestParam(value = "a", required = false) int a,
-                                @RequestParam(value = "b", required = false) int b,
-                                @RequestParam(value = "calc", required = false) String calc,
-                             Model model) {
+    @GetMapping("/{id}")
+    public String showUsers(@PathVariable("id") int id, Model model) {
+        model.addAttribute("user", userDAO.showUser(id));
+        return "user/show";
+    }
 
-        double result;
+    @GetMapping("/new")
+    public String newUser(@ModelAttribute("user") User user) {
+        return "user/new";
+    }
 
-        switch (calc) {
-            case "add" -> result = a + b;
-            case "mul" -> result = a + b;
-            case "sub" -> result = a - b;
-            case "div" -> result = a / (double) b;
-            default -> result = 0;
-        }
-        if (result == 0) {
-            System.out.println("Неверная операция");
-        }
+    @PostMapping
+    public String createUser(@ModelAttribute("user") @Valid User user,
+                             BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return "user/new";
+        userDAO.save(user);
+        return "redirect:/user";
+    }
 
-        model.addAttribute("result", "result is : " + a + " " + calc + " " + b + " " + "= " + result);
-        return "first/calculator";
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("user", userDAO.showUser(id));
+        return "user/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("user") @Valid User user, @PathVariable("id") int id,
+                         BindingResult bindingResults) {
+        if (bindingResults.hasErrors())
+            return "user/edit";
+
+        userDAO.update(id, user);
+        return "redirect:/user";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        userDAO.delete(id);
+        return "redirect:/user";
     }
 }
