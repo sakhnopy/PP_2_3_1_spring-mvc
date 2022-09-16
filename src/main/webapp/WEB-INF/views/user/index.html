@@ -2,15 +2,46 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>all users</title>
+    <title>List People</title>
 </head>
-
 <body>
-<div th:each="userD : ${user}">
-    <a th:href="@{/user/{id}(id=${userD.getId()})}" th:text="${userD.getName() + ' ' + userD.getLastname()}" >user</a>
-</div>
+<h1> Users</h1>
+<table border="1">
+    <tr style="color: indianred">
+        <th>Id</th>
+        <th>Name</th>
+        <th>Lastname</th>
+        <th>Lastname</th>
+    </tr>
+    <tr>
+    <tr th:each="user : ${people}">
+        <td th:utext="${user.getName()}"></td>
+        <td th:utext="${user.getLastname()}"></td>
+
+            <form th:method="DELETE" th:action="@{/people/{id}(id=${user.getId()})}">
+                <input type="submit" value="Delete">
+            </form>
+        </td>
+        <td>
+            <a th:href="@{/people/{id}/edit(id=${user.getId()})}">Edit</a>
+        </td>
+    </tr>
+</table>
 <br/>
+<br>
 <hr/>
-<a href="/user/new">Create new User</a>
+<h2>Create a new user</h2>
+
+<form th:method="POST" th:action="@{/people}" th:object="${newUser}">
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name"/>
+
+    <br/>
+    <label for=>Name</label>
+    <input type="text" th:field="*{name}" id="name"/>
+
+    <br/>
+    <input type="submit" value="Create!"/>
+</form>
 </body>
 </html>

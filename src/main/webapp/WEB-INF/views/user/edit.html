@@ -12,10 +12,6 @@
     <input type="text" th:field="*{name}" id="name"/>
     <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
     <br/>
-    <label for="lastname">Ener lastname: </label>
-    <input type="text" th:field="*{lastname}" id="lastname"/>
-    <div style="color: #e80d0d" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">lastName error</div>
-    <input type="submit" value="Update!"/>
 </form>
 <hr/>
 <a href="/user/">to Index</a>

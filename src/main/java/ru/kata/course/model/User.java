@@ -1,10 +1,10 @@
-package ru.kata.course.Entity;
+package ru.kata.course.model;
 
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users", schema = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
