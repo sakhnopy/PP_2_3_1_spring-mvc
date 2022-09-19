@@ -7,16 +7,17 @@
 
 <body>
 
-<form th:method="PATCH" th:action="@{/user/{id}(id=${user.getId()})}" th:object="${user}">
-    <label for="name">Enter name: </label>
+<h2>Create a new user</h2>
+
+<form th:method="POST" th:action="@{/user}" th:object="${user}">
+    <label for="name">Name</label>
     <input type="text" th:field="*{name}" id="name"/>
     <br/>
-    <label for="lastName">Enter email: </label>
+    <label for=>lastName</label>
     <input type="text" th:field="*{lastname}" id="lastName"/>
+
     <br/>
-    <input type="submit" value="Update!"/>
+    <input type="submit" value="Create!"/>
 </form>
-<hr/>
-<a href="/user/">to Index</a>
 </body>
 </html>
