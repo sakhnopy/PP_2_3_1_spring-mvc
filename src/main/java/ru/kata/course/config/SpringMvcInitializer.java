@@ -49,4 +49,5 @@ public class SpringMvcInitializer extends AbstractAnnotationConfigDispatcherServ
         aContext.addFilter("hiddenHttpMethodFilter",
                 new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null ,true, "/*");
     }
+
 }

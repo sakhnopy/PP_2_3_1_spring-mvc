@@ -35,13 +35,13 @@ public class UserController {
         return "user/new";
     }
 
-    @PostMapping()
+    @PostMapping("user")
     public String saveUser(@ModelAttribute("user") User user) {
         userService.save(user);
         return "redirect:/user";
     }
 
-    @GetMapping("user/{id}/edit")
+    @GetMapping("/user/{id}/edit")
     public String editUser(Model model, @PathVariable("id") int id) {
         model.addAttribute("user", userService.getUserById(id));
         return "user/edit";

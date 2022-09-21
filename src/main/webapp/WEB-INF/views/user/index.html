@@ -23,7 +23,7 @@
                 </form>
             </td>
         <td>
-            <a th:href="@{{id}/edit(id=${user.getId()})}">Edit</a>
+            <a th:href="@{/user/{id}/edit(id=${user.getId()})}">Edit</a>
         </td>
     </tr>
 </table>
@@ -31,7 +31,7 @@
 <br/>
 <br>
 <hr/>
-<a th:href="@{user/new}">Create New User</a>
+<a th:href="@{/user/new}">Create New User</a>
 
 </body>
 </html>
